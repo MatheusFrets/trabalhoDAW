@@ -6,6 +6,7 @@
 
 package br.edu.ifsul.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +29,7 @@ import javax.validation.constraints.NotNull;
  * @organization IFSUL - Campus Passo Fundo
  */@Entity
  @Table(name = "recurso")
-public class Recurso {
+public class Recurso implements Serializable{
      @Id
     @SequenceGenerator(name = "seq_recurso", sequenceName = "seq_recurso_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_recurso", strategy = GenerationType.SEQUENCE)
@@ -36,15 +37,15 @@ public class Recurso {
      @NotNull(message = "A descricao nao pode ser em branco")
      @Column(name = "descricao")
     private String descricao;
-     @ManyToMany
-    @JoinTable(name = "recursos", 
-            joinColumns = 
-                @JoinColumn(name = "recurso", referencedColumnName = "id", 
-                    nullable = false),
-            inverseJoinColumns = // guarda a coluna da classe da lista List<Produto>
-                @JoinColumn(name = "recurso", referencedColumnName = "id", 
-                    nullable = false))
-    private List<Condominio> condominios = new ArrayList<>();
+//     @ManyToMany
+//    @JoinTable(name = "recursos", 
+//            joinColumns = 
+//                @JoinColumn(name = "recurso", referencedColumnName = "id", 
+//                    nullable = false),
+//            inverseJoinColumns = // guarda a coluna da classe da lista List<Produto>
+//                @JoinColumn(name = "recurso", referencedColumnName = "id", 
+//                    nullable = false))
+//    private List<Condominio> condominios = new ArrayList<>();
      
 //colocar o many to many algo assim
     public Integer getId() {

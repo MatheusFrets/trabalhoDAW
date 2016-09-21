@@ -9,8 +9,18 @@ package br.edu.ifsul.modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -21,12 +31,27 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "aluguel")
 public class Aluguel implements Serializable{
-
+    @Id
+    @SequenceGenerator(name = "seq_aluguel", sequenceName = "seq_aluguel_id", allocationSize = 1)
+    @GeneratedValue(generator = "seq_aluguel", strategy = GenerationType.SEQUENCE)
     private Integer id;
+    @NotNull(message = "O valor nao pode ser nulo")
+    @Column(name = "valor", columnDefinition = "numeric(12,2)")
     private Double valor;
+    @Temporal(TemporalType.DATE)
+    @NotNull(message = "A data do inicio do contrato deve ser informada")
+    @Column(name = "inicioContrato", nullable = false)
     private Calendar inicioContrato;
+    @Temporal(TemporalType.DATE)
+    @NotNull(message = "A data do fim do contrato deve ser informada deve ser informada")
+    @Column(name = "fimContrato")
     private Calendar fimContrato;
+    @NotNull(message = "O dia do vencimento deve ser informado")
+    @Column(name = "diaVencimento")
     private Integer diaVencimento;
+    @NotNull(message = "O Locatario não pode ser nulo")
+    @ManyToOne
+    @JoinColumn(name = "locatario", referencedColumnName = "id", nullable = false)
     private Locatario locatario;
 
     public Aluguel() {

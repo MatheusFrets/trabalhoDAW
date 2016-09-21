@@ -5,8 +5,11 @@
  */
 package br.edu.ifsul.junit;
 
+
+import br.edu.ifsul.modelo.Aluguel;
+import br.edu.ifsul.modelo.Condominio;
 import br.edu.ifsul.modelo.Locatario;
-import br.edu.ifsul.modelo.Recurso;
+import java.util.GregorianCalendar;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,8 +17,8 @@ import javax.persistence.Persistence;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
+import junit.framework.Assert;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,17 +27,16 @@ import static org.junit.Assert.*;
  *
  * @author Matheus
  */
-public class TestePersistirRecurso {
+public class TestePersistirAluguel {
 
     EntityManagerFactory emf;
     EntityManager em;
 
-    public TestePersistirRecurso() {
+    public TestePersistirAluguel() {
     }
 
     @Before
     public void setUp() {
-
         emf = Persistence.createEntityManagerFactory("TrabalhoDAWPU");
         em = emf.createEntityManager();
     }
@@ -47,24 +49,26 @@ public class TestePersistirRecurso {
 
     @Test
     public void teste() {
-        Boolean exception = false;
+        boolean exception = false;
         try {
-            Recurso r = new Recurso();
-            r.setDescricao("Problema na agua da calha");
-            
+            Aluguel a = new Aluguel();
+            a.setValor(500.00);
+            a.setInicioContrato(new GregorianCalendar(2015,10,30));
+            a.setFimContrato(new GregorianCalendar(2017,10,30));
+            a.setDiaVencimento(30);
+            a.setLocatario(em.find(Locatario.class,2));
 
-            Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
-            Set<ConstraintViolation<Recurso>> erros = validador.validate(r);
-
+            Validator validador
+                    = Validation.buildDefaultValidatorFactory().getValidator();
+            Set<ConstraintViolation<Aluguel>> erros = validador.validate(a);
             if (erros.size() > 0) {
-                for (ConstraintViolation<Recurso> erro : erros) {
+                for (ConstraintViolation<Aluguel> erro : erros) {
                     System.out.println("Erro: " + erro.getMessage());
-                    exception = true;
                 }
-
+                exception = true;
             } else {
                 em.getTransaction().begin();
-                em.persist(r);
+                em.persist(a);
                 em.getTransaction().commit();
             }
         } catch (Exception e) {
@@ -72,7 +76,5 @@ public class TestePersistirRecurso {
             e.printStackTrace();
         }
         Assert.assertEquals(false, exception);
-
     }
-
 }
