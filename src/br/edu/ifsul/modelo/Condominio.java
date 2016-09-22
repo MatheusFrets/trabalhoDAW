@@ -6,6 +6,8 @@
 
 package br.edu.ifsul.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +16,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -50,6 +55,17 @@ public class Condominio {
     @Column(name = "cep", length = 8)
     private String cep;
 
+    @ManyToMany
+    @JoinTable(name = "recursos", 
+            joinColumns = 
+                @JoinColumn(name = "condominio", referencedColumnName = "id", 
+                    nullable = false),
+            inverseJoinColumns = // guarda a coluna da classe da lista List<Produto>
+                @JoinColumn(name = "recurso", referencedColumnName = "id", 
+                    nullable = false))
+    private List<Recurso> recursos = new ArrayList<>();
+    
+    
     public Condominio() {
     }
     
@@ -119,6 +135,14 @@ public class Condominio {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public List<Recurso> getRecursos() {
+        return recursos;
+    }
+
+    public void setRecursos(List<Recurso> recursos) {
+        this.recursos = recursos;
     }
 
     

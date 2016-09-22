@@ -5,7 +5,6 @@
  */
 package br.edu.ifsul.junit;
 
-import br.edu.ifsul.modelo.Condominio;
 import br.edu.ifsul.modelo.Locatario;
 import br.edu.ifsul.modelo.Recurso;
 import java.util.Set;
@@ -25,12 +24,12 @@ import static org.junit.Assert.*;
  *
  * @author Matheus
  */
-public class TestePersistirRecurso {
+public class TestePersistirRecursosCondominios {
 
     EntityManagerFactory emf;
     EntityManager em;
 
-    public TestePersistirRecurso() {
+    public TestePersistirRecursosCondominios() {
     }
 
     @Before
@@ -50,16 +49,15 @@ public class TestePersistirRecurso {
     public void teste() {
         Boolean exception = false;
         try {
-            Condominio c = em.find(Condominio.class, 1);
-            Recurso r = em.find(Recurso.class, 1);
-
-            c.getRecursos().add(r);
+            Recurso r = new Recurso();
+            r.setDescricao("Problema na agua da calha");
+            
 
             Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
-            Set<ConstraintViolation<Condominio>> erros = validador.validate(c);
+            Set<ConstraintViolation<Recurso>> erros = validador.validate(r);
 
             if (erros.size() > 0) {
-                for (ConstraintViolation<Condominio> erro : erros) {
+                for (ConstraintViolation<Recurso> erro : erros) {
                     System.out.println("Erro: " + erro.getMessage());
                     exception = true;
                 }
