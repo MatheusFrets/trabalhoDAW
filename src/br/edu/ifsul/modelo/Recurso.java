@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.edu.ifsul.modelo;
 
 import java.io.Serializable;
@@ -27,27 +26,24 @@ import javax.validation.constraints.NotNull;
  * @author Matheus
  * @email omatheusfreitas@gmail.com
  * @organization IFSUL - Campus Passo Fundo
- */@Entity
- @Table(name = "recurso")
-public class Recurso implements Serializable{
-     @Id
+ */
+@Entity
+@Table(name = "recurso")
+public class Recurso implements Serializable {
+
+    @Id
     @SequenceGenerator(name = "seq_recurso", sequenceName = "seq_recurso_id", allocationSize = 1)
     @GeneratedValue(generator = "seq_recurso", strategy = GenerationType.SEQUENCE)
     private Integer id;
-     @NotNull(message = "A descricao nao pode ser em branco")
-     @Column(name = "descricao")
+    @NotNull(message = "A descricao nao pode ser em branco")
+    @Column(name = "descricao")
     private String descricao;
-//     @ManyToMany
-//    @JoinTable(name = "recursos", 
-//            joinColumns = 
-//                @JoinColumn(name = "recurso", referencedColumnName = "id", 
-//                    nullable = false),
-//            inverseJoinColumns = // guarda a coluna da classe da lista List<Produto>
-//                @JoinColumn(name = "recurso", referencedColumnName = "id", 
-//                    nullable = false))
-//    private List<Condominio> condominios = new ArrayList<>();
-     
-//colocar o many to many algo assim
+
+    public Recurso() {
+    }
+    
+    
+
     public Integer getId() {
         return id;
     }
@@ -64,7 +60,6 @@ public class Recurso implements Serializable{
         this.descricao = descricao;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -89,7 +84,5 @@ public class Recurso implements Serializable{
         }
         return true;
     }
-     
-     
 
 }

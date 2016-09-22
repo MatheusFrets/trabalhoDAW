@@ -31,7 +31,6 @@ import org.hibernate.validator.constraints.NotBlank;
  * @organization IFSUL - Campus Passo Fundo
  */
 @Entity
-//@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "condominio")
 public class Condominio {
     @Id
