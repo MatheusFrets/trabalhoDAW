@@ -50,7 +50,7 @@ public class TestePersistirRecursosCondominios {
         Boolean exception = false;
         try {
             Recurso r = new Recurso();
-            r.setDescricao("Problema na agua da calha");
+            r.setDescricao("Problema nos fios de luz do apartamento");
             
 
             Validator validador = Validation.buildDefaultValidatorFactory().getValidator();
